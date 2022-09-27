@@ -11,7 +11,6 @@ db = SQLAlchemy(app)
 migrate = Migrate(app, db, compare_type=True)
 
 from app.models import user, data, user_device, device
+from app.api import bp as bp
 
-@app.route("/")
-def hello_world():
-    return "<p>Hello, World!</p>"
+app.register_blueprint(bp, url_prefix='/api/v1/')

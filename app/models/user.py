@@ -10,7 +10,7 @@ import os
 import base64
 
 
-class AppUser(db.Model, SerializerMixin, CustomSerializer):
+class User(db.Model, SerializerMixin, CustomSerializer):
     """ class with all the information of the table user """
 
     __tablename__ = 'user'
@@ -51,7 +51,7 @@ class AppUser(db.Model, SerializerMixin, CustomSerializer):
 
     @staticmethod
     def check_token(token):
-        user = AppUser.query.filter_by(token=token).first()
+        user = User.query.filter_by(token=token).first()
         if user is None or user.token_expiration < datetime.utcnow():
             return None
 
