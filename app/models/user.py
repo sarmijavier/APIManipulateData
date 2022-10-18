@@ -21,6 +21,10 @@ class User(db.Model, SerializerMixin, CustomSerializer):
     password = db.Column(db.String(250), nullable=False)
     token = db.Column(db.String(32), index=True, unique=True)
     token_expiration = db.Column(db.DateTime)
+    token_fitbit = db.Column(db.String(1000))
+    user_id = db.Column(db.String(32))
+    refresh_token_fitbit = db.Column(db.String(1000))
+    active_session = db.Column(db.Boolean, default=False, nullable=False)
     created_at = db.Column(db.DateTime(timezone=True), server_default=func.now())
     updated_at = db.Column(db.DateTime(timezone=True), onupdate=func.now())
     
@@ -28,7 +32,11 @@ class User(db.Model, SerializerMixin, CustomSerializer):
         'id', 
         'name', 
         'email', 
-        'password', 
+        'password',
+        'token_fitbit',
+        'refresh_token_fitbit',
+        'user_id',
+        'active_session',
         'created_at', 
         'updated_at',
     ]    

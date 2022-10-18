@@ -10,7 +10,7 @@ app.config.from_object(Config)
 db = SQLAlchemy(app)
 migrate = Migrate(app, db, compare_type=True)
 
-from app.models import user, data, user_device, device
+from app.models import heart_rate_data, record_date, user
 from app.api import bp as bp
 
 app.register_blueprint(bp, url_prefix='/api/v1/')
