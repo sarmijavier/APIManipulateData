@@ -1,13 +1,14 @@
 from app.api import bp
 from app import db
 from app.models.user import User
+from app.models.record_date import RecordDate
 
 from flask import request, jsonify
 import json
 
 import requests
 from requests.structures import CaseInsensitiveDict
-
+from datetime import datetime, timedelta
 
 
 @bp.route('/hello')
@@ -27,11 +28,23 @@ def register():
 			'message': 'The user already exists'
 		}
 		return jsonify(result)
-	
+
+	today = datetime.today().strftime('%Y-%m-%d')
+	today_one_month_ago = (datetime.today() - timedelta(30)).strftime('%Y-%m-%d')
+
+	record_date = RecordDate()
+	record_date.initial_date = today
+	record_date.last_date = today_one_month_ago
+	db.session.add(record_date)
+	db.session.commit()
+
+	record_date_id = record_date.id
+
 	user = User()
 	user.from_dict(data)
 	user.set_password(user.password)
 	user.get_token()
+	user.record_date_id = record_date_id
 	db.session.add(user)
 	db.session.commit()
 
@@ -40,6 +53,7 @@ def register():
 		'code': 200,
 		'message': 'User created'
 	}
+
 	return jsonify(result)
 
 
@@ -63,6 +77,10 @@ def login():
 				'email': email,
 				'active_session': user.to_dict()['active_session']
 			}
+
+			token = user.to_dict()['token_fitbit']
+			if token:
+				get_data(token)
 
 			return jsonify(result)
 	
@@ -132,3 +150,20 @@ def refresh_token_fitbit(email):
 	db.session.commit()
 
 	print(resp.status_code)
+
+
+
+
+def get_data(token, today, today_one_month_ago):
+
+	url = "https://api.fitbit.com/1/user/-/activities/heart/date/2019-01-01/2019-01-31.json"
+
+	headers = CaseInsensitiveDict()
+	headers["Authorization"] = f"Bearer {token}"
+	headers["accept"] = "application/json"
+
+
+	resp = requests.get(url, headers=headers)
+	json_resp = json.loads(resp.text)
+
+	

@@ -25,6 +25,7 @@ class User(db.Model, SerializerMixin, CustomSerializer):
     user_id = db.Column(db.String(32))
     refresh_token_fitbit = db.Column(db.String(1000))
     active_session = db.Column(db.Boolean, default=False, nullable=False)
+    record_date_id = db.Column(db.Integer, db.ForeignKey('record_date.id'), nullable=False, server_default='1')
     created_at = db.Column(db.DateTime(timezone=True), server_default=func.now())
     updated_at = db.Column(db.DateTime(timezone=True), onupdate=func.now())
     
