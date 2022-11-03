@@ -11,10 +11,11 @@ class RecordDate(db.Model, SerializerMixin, CustomSerializer):
     id = db.Column(db.Integer, primary_key=True)
     initial_date = db.Column(db.DateTime(timezone=True), nullable=False)
     last_date = db.Column(db.DateTime(timezone=True), nullable=False)
+    data_taken = db.Column(db.Boolean, nullable=True, server_default='0')
     created_at = db.Column(db.DateTime(timezone=True), server_default=func.now())
     updated_at = db.Column(db.DateTime(timezone=True), onupdate=func.now())
 
-    fields = ['id','initial_date', 'last_date', 'created_at','updated_at']
+    fields = ['id','initial_date', 'last_date', 'data_taken', 'created_at','updated_at']
 
     def __repr__(self):
         return f'<RecordDate {self.id}.>'
