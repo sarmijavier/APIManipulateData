@@ -227,7 +227,7 @@ def get_data(token, today, today_one_month_ago, user_id, record_date):
 		record_date.data_taken = 1
 		db.session.commit()
 
-	elif days_difference > 0 and data_taken == False:
+	elif days_difference > 0 and data_taken == True:
 
 		token_expired = get_heart_rate_record(token, today, today_one_month_ago, user_id)
 		token_expired = get_activity_record(token, today, user_id)
