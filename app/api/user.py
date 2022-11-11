@@ -90,6 +90,7 @@ def login():
 			last_date = record_date.to_dict()['last_date']
 			token = user.to_dict()['token_fitbit']
 			user_id = user.to_dict()['id']
+			name = user.to_dict()['name']
 			token_expired = False
 			if token:
 				token_expired = get_data(token, initial_data, last_date, user_id, record_date)
@@ -103,6 +104,7 @@ def login():
 				'code': 200,
 				'message': 'the user exists',
 				'email': email,
+				'name': name,
 				'active_session': False if token_expired else True
 			}
 
