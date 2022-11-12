@@ -29,6 +29,23 @@ def hello():
 	return jsonify({'success': 'exito!'})
 
 
+@bp.route('/activate/emergency')
+def send_whatsapp_message():
+	url = "https://graph.facebook.com/v15.0/103819765886206/messages"
+
+	headers = CaseInsensitiveDict()
+	headers["Authorization"] = "Bearer EABXf6TqXneYBAHvylHZCBbErBbYfNFQFu8mtQhixYONKJLPLDyG8ZC7ZAjut1dI2FrGGeDOTfVMfofzW0dRK4tThBbL4OmIS8I0RIwtJMkiN3ZANJ3foJpGbePgwht6umIBHZACwIlnBGtNgmRu4L7gLdq8anehfJHgGuoLPmQ5DWEN2LOHhENP4YfnB3LRHVo9ZCY1WxhazOti5BoAD1Y"
+	headers["Content-Type"] = "application/json"
+
+	data = '{ "messaging_product": "whatsapp", "to": "573123183616", "type": "template", "template": { "name": "hello_world", "language": { "code": "en_US" } } }'
+
+
+	resp = requests.post(url, headers=headers, data=data)
+
+	print(resp.status_code)
+	return jsonify({'success': 'exito!'})
+
+
 @bp.route('/user', methods=['PUT'])
 def update_user_information():
 	data = json.loads(request.data)
