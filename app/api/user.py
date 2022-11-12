@@ -29,6 +29,60 @@ def hello():
 	return jsonify({'success': 'exito!'})
 
 
+@bp.route('/user', methods=['PUT'])
+def update_user_information():
+	data = json.loads(request.data)
+	email = data['email']	
+
+	user = User.query.filter_by(email=email).first()
+	user.name = data['name']
+	db.session.commit()
+	
+	result = {
+		'code': 200,
+		'message': 'User updated'
+	}
+
+	return jsonify(result)
+
+
+@bp.route('/password', methods=['PUT'])
+def update_password_information():
+	data = json.loads(request.data)
+	email = data['email']	
+
+	user = User.query.filter_by(email=email).first()
+	user.set_password(data['password'])
+	db.session.commit()
+	
+	result = {
+		'code': 200,
+		'message': 'User updated'
+	}
+
+	return jsonify(result)
+
+
+
+@bp.route('/emergency', methods=['PUT'])
+def update_emergency_information():
+	data = json.loads(request.data)
+	email = data['email']	
+
+	user = User.query.filter_by(email=email).first()
+	user.emai_contact = data['emai_contact']
+	user.number_contact = data['number_contact']
+	user.name_contact = data['name_contact']
+	db.session.commit()
+	
+	result = {
+		'code': 200,
+		'message': 'User updated'
+	}
+
+	return jsonify(result)
+
+
 
 @bp.route('/register', methods=['POST'])
 def register():
@@ -91,6 +145,9 @@ def login():
 			token = user.to_dict()['token_fitbit']
 			user_id = user.to_dict()['id']
 			name = user.to_dict()['name']
+			name_contact = user.to_dict()['name_contact']
+			number_contact = user.to_dict()['number_contact']
+			emai_contact = user.to_dict()['emai_contact']
 			token_expired = False
 			if token:
 				token_expired = get_data(token, initial_data, last_date, user_id, record_date)
@@ -105,6 +162,9 @@ def login():
 				'message': 'the user exists',
 				'email': email,
 				'name': name,
+				'name_contact': name_contact,
+				'number_contact': number_contact,
+				'emai_contact': emai_contact,
 				'active_session': False if token_expired else True
 			}
 

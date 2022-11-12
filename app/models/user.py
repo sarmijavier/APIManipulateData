@@ -26,6 +26,9 @@ class User(db.Model, SerializerMixin, CustomSerializer):
     refresh_token_fitbit = db.Column(db.String(1000))
     active_session = db.Column(db.Boolean, default=False, nullable=False)
     record_date_id = db.Column(db.Integer, db.ForeignKey('record_date.id'), nullable=False, server_default='1')
+    emai_contact = db.Column(db.String(150), nullable=False)
+    number_contact = db.Column(db.String(150), nullable=False)
+    name_contact = db.Column(db.String(150), nullable=False)
     created_at = db.Column(db.DateTime(timezone=True), server_default=func.now())
     updated_at = db.Column(db.DateTime(timezone=True), onupdate=func.now())
     
@@ -38,6 +41,9 @@ class User(db.Model, SerializerMixin, CustomSerializer):
         'refresh_token_fitbit',
         'user_id',
         'active_session',
+        'emai_contact',
+        'number_contact',
+        'name_contact',
         'created_at', 
         'updated_at',
     ]    
