@@ -34,10 +34,10 @@ def send_whatsapp_message():
 	url = "https://graph.facebook.com/v15.0/103819765886206/messages"
 
 	headers = CaseInsensitiveDict()
-	headers["Authorization"] = "Bearer EABXf6TqXneYBAHvylHZCBbErBbYfNFQFu8mtQhixYONKJLPLDyG8ZC7ZAjut1dI2FrGGeDOTfVMfofzW0dRK4tThBbL4OmIS8I0RIwtJMkiN3ZANJ3foJpGbePgwht6umIBHZACwIlnBGtNgmRu4L7gLdq8anehfJHgGuoLPmQ5DWEN2LOHhENP4YfnB3LRHVo9ZCY1WxhazOti5BoAD1Y"
+	headers["Authorization"] = ""
 	headers["Content-Type"] = "application/json"
 
-	data = '{ "messaging_product": "whatsapp", "to": "573123183616", "type": "template", "template": { "name": "hello_world", "language": { "code": "en_US" } } }'
+	data = '{ "messaging_product": "whatsapp", "to": "", "type": "template", "template": { "name": "testsendmessage", "language": { "code": "en_US" } } }'
 
 
 	resp = requests.post(url, headers=headers, data=data)
@@ -212,7 +212,7 @@ def register_fitbit():
 		url = "https://api.fitbit.com/oauth2/token"
 
 		headers = CaseInsensitiveDict()
-		headers["Authorization"] = "Basic MjJCTjJLOmYwYWIzYWE4NDEwN2JjN2Q1OWI4MzA3YzZhZTgwNmJm"
+		headers["Authorization"] = ""
 		headers["Content-Type"] = "application/x-www-form-urlencoded"
 
 		data = f'clientId=22BN2K&grant_type=authorization_code&redirect_uri=http%3A%2F%2Flocalhost%3A3000%2Fdashboard&code={code}'
@@ -260,7 +260,7 @@ def refresh_token_fitbit(email):
 	url = "https://api.fitbit.com/oauth2/token"
 
 	headers = CaseInsensitiveDict()
-	headers["Authorization"] = "Basic MjJCTjJLOmYwYWIzYWE4NDEwN2JjN2Q1OWI4MzA3YzZhZTgwNmJm"
+	headers["Authorization"] = ""
 	headers["Content-Type"] = "application/x-www-form-urlencoded"
 
 	data = f'clientId=22BN2K&grant_type=refresh_token&redirect_uri=http%3A%2F%2Flocalhost%3A3000%2Fdashboard&refresh_token={refresh_token_fitbit}'
